@@ -37,16 +37,16 @@ public class JamalangInterpreter {
                         variables.put(name, evaluateToDouble(value));
                     }
                 } else if (ParsingHelper.getFunctionName(keywords[0]).equals("for")) {
-                    String[] forArgs = ParsingHelper.getArgArray(ParsingHelper.getArgsInFunction(line.split("=>")[0]));
-                    String forVarName = ParsingHelper.getArgArray(ParsingHelper.getArgsInFunction(line.split("=>")[1]))[0];
+                    String[] forArgs = ParsingHelper.getArgArray(line.split("=>")[0]);
+                    String forVarName = ParsingHelper.getArgArray(line.split("=>")[1])[0];
                     String[] executionCode = ParsingHelper.getEnclosedLines(lines, lineNumber);
 
                     for (int i = 0; i < Integer.parseInt(forArgs[0]); i++) {
+                        this.variables.put(forVarName, (double) i);
+
                         for (String forLine : executionCode) {
                             this.execute(forLine);
                         }
-
-                        this.variables.put(forVarName, (double) i);
                     }
 
                     this.variables.remove(forVarName);
@@ -69,7 +69,7 @@ public class JamalangInterpreter {
                         case "--" -> variables.put(name, doubleValue - 1);
                     }
                 } else if (functions.hasFunction(line)) {
-                    functions.getFunction(line).get().execute(ParsingHelper.getArgArray(ParsingHelper.getArgsInFunction(line)));
+                    functions.getFunction(line).get().execute(ParsingHelper.getArgArray(line));
                 }
             }
         }
@@ -83,7 +83,7 @@ public class JamalangInterpreter {
         if (ParsingHelper.isBoolean(value)) {
             return ParsingHelper.evaluateBooleanToDouble(value);
         } else if (functions.hasFunction(value)) {
-            return (double) functions.getFunction(value).get().execute(ParsingHelper.getArgArray(ParsingHelper.getArgsInFunction(value)));
+            return (double) functions.getFunction(value).get().execute(ParsingHelper.getArgArray(value));
         } else {
             if (value.startsWith("!") && variables.containsKey(value.split("!")[1])) {
                 return ParsingHelper.invertBoolean(variables.get(value.split("!")[1]));

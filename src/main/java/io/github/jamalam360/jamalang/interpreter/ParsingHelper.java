@@ -1,7 +1,6 @@
 package io.github.jamalam360.jamalang.interpreter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ParsingHelper {
     /**
@@ -35,18 +34,18 @@ public class ParsingHelper {
         return input.trim().split("\\(", 2)[0];
     }
 
-    /**
-     * @param input The function call to evaluate e.g. print(aString)
-     * @return The parameters passed to the function e.g. aString
-     */
-    public static String getArgsInFunction(String input) {
+    private static String getArgsInFunction(String input) {
         input = input.split("\\(", 2)[1];
         input = input.split("\\)", 2)[0];
         return input;
     }
 
+    /**
+     * @param input The function call to evaluate e.g. print(aString)
+     * @return The parameters passed to the function e.g. [aString]
+     */
     public static String[] getArgArray(String input) {
-        String[] arr = input.split(",");
+        String[] arr = getArgsInFunction(input).split(",");
 
         for (int i = 0; i < arr.length; i++) {
             arr[i] = sanitizeInput(arr[i]);
