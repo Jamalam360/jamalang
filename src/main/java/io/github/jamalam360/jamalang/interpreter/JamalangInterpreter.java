@@ -5,7 +5,7 @@ import io.github.jamalam360.jamalang.langauge.BuiltInFunctions;
 import java.util.HashMap;
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
-// We check if it is present before using a different method other than isPresent
+// We check if it is present before (using a different method other than isPresent)
 public class JamalangInterpreter {
     public final HashMap<String, Double> variables = new HashMap<>();
     private final BuiltInFunctions functions;
