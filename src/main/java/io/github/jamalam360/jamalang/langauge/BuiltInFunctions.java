@@ -1,6 +1,6 @@
 package io.github.jamalam360.jamalang.langauge;
 
-import io.github.jamalam360.jamalang.interpreter.Exceptions;
+import io.github.jamalam360.jamalang.interpreter.InterpreterExceptions;
 import io.github.jamalam360.jamalang.interpreter.JamalangInterpreter;
 import io.github.jamalam360.jamalang.interpreter.ParsingHelper;
 import io.github.jamalam360.jamalang.util.JamalangFunction;
@@ -18,7 +18,7 @@ public class BuiltInFunctions {
 
         builtInFunctions.put("print", (args -> {
             if (args.length != 1) {
-                throw Exceptions.incorrectParameterException("print");
+                throw InterpreterExceptions.incorrectParameterException("print");
             } else {
                 if (interpreter.variables.containsKey(args[0])) {
                     String output = String.valueOf(interpreter.variables.get(args[0]));
@@ -36,7 +36,7 @@ public class BuiltInFunctions {
 
         builtInFunctions.put("sqrt", (args -> {
             if (args.length != 1) {
-                throw Exceptions.incorrectParameterException("Sqrt");
+                throw InterpreterExceptions.incorrectParameterException("Sqrt");
             } else {
                 if (interpreter.variables.containsKey(args[0])) {
                     double value = interpreter.variables.get(args[0]);
@@ -50,21 +50,24 @@ public class BuiltInFunctions {
 
         builtInFunctions.put("userInput", (args -> {
             if (!args[0].isEmpty()) {
-                throw Exceptions.incorrectParameterException("userInput");
+                throw InterpreterExceptions.incorrectParameterException("userInput");
             } else {
                 return Double.parseDouble(UserInput.getUserInput());
             }
         }));
 
         builtInFunctions.put("add", (args -> {
-            if (interpreter.variables.containsKey(args[0])) {
-                double value1 = interpreter.variables.get(args[0]);
-                double value2 = interpreter.variables.get(args[1]);
+            double sum = 0;
 
-                return value1 + value2;
-            } else {
-                return Integer.parseInt(args[0]) + Integer.parseInt(args[1]);
+            for (String arg : args) {
+                if (interpreter.variables.containsKey(arg)) {
+                    sum += interpreter.variables.get(arg);
+                } else {
+                    sum += Double.parseDouble(arg);
+                }
             }
+
+            return sum;
         }));
     }
 

@@ -40,17 +40,16 @@ public class ParsingHelper {
      */
     public static String getArgsInFunction(String input) {
         input = input.split("\\(", 2)[1];
-        return input.substring(0, input.length() - 1);
+        input = input.split("\\)", 2)[0];
+        return input;
     }
 
     public static String[] getArgArray(String input) {
-        String[] arr = input.split(";");
-        System.out.println(Arrays.toString(arr));
+        String[] arr = input.split(",");
 
         for (int i = 0; i < arr.length; i++) {
             arr[i] = sanitizeInput(arr[i]);
             arr[i] = arr[i].trim();
-            System.out.println(arr[i]);
         }
 
         return arr;

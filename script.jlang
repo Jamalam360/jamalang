@@ -1,5 +1,7 @@
-var number = 2
+var number1 = 2
 var number2 = 3
+var number3 = 70
+var number4 = 25
 
-var number3 = add(number;               number2)
-print(number3)
+var number5 = add(number1, number2, number3, number4)
+print(number5)

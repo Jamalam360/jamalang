@@ -1,6 +1,6 @@
 package io.github.jamalam360.jamalang.util;
 
-import io.github.jamalam360.jamalang.interpreter.Exceptions;
+import io.github.jamalam360.jamalang.interpreter.InterpreterExceptions;
 
 import java.util.Scanner;
 
@@ -11,7 +11,7 @@ public class UserInput {
         if (SCANNER.hasNext()) {
             return SCANNER.nextLine();
         } else {
-            throw Exceptions.userInputFailure();
+            throw InterpreterExceptions.userInputFailure();
         }
     }
 }
