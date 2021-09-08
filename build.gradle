@@ -1,6 +1,11 @@
+//file:noinspection GroovyAssignabilityCheck
+//file:noinspection GroovyUnusedAssignment
 plugins {
     id 'java'
 }
+
+apply plugin: 'application'
+mainClassName = 'io.github.jamalam360.jamalang.Main'
 
 group 'io.github.jamalam360'
 version '1.0-SNAPSHOT'
@@ -9,11 +14,6 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-}
-
-test {
-    useJUnitPlatform()
+run {
+    args += 'script.jlang'
 }
