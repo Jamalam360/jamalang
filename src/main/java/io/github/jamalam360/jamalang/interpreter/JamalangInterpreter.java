@@ -4,7 +4,8 @@ import io.github.jamalam360.jamalang.langauge.BuiltInFunctions;
 
 import java.util.HashMap;
 
-@SuppressWarnings("OptionalGetWithoutIsPresent") // We check if it is present before using a different method other than isPresent
+@SuppressWarnings("OptionalGetWithoutIsPresent")
+// We check if it is present before using a different method other than isPresent
 public class JamalangInterpreter {
     public final HashMap<String, Double> variables = new HashMap<>();
     private final BuiltInFunctions functions;
@@ -15,8 +16,11 @@ public class JamalangInterpreter {
 
     public void execute(String inputCode) throws Exception {
         String[] lines = inputCode.split("\\n"); // Split line by line
+        int lineNumber = 0;
 
         for (String line : lines) {
+            lineNumber++;
+
             line = ParsingHelper.sanitizeInput(line);
             line = ParsingHelper.makeLineSane(line);
 
@@ -32,6 +36,20 @@ public class JamalangInterpreter {
                     } else {
                         variables.put(name, evaluateToDouble(value));
                     }
+                } else if (ParsingHelper.getFunctionName(keywords[0]).equals("for")) {
+                    String[] forArgs = ParsingHelper.getArgArray(ParsingHelper.getArgsInFunction(line.split("=>")[0]));
+                    String forVarName = ParsingHelper.getArgArray(ParsingHelper.getArgsInFunction(line.split("=>")[1]))[0];
+                    String[] executionCode = ParsingHelper.getEnclosedLines(lines, lineNumber);
+
+                    for (int i = 0; i < Integer.parseInt(forArgs[0]); i++) {
+                        for (String forLine : executionCode) {
+                            this.execute(forLine);
+                        }
+
+                        this.variables.put(forVarName, (double) i);
+                    }
+
+                    this.variables.remove(forVarName);
                 } else if (variables.containsKey(keywords[0])) { // An assignment operation to a pre-existing variable
                     String name = keywords[0];
                     String operation = keywords[1];

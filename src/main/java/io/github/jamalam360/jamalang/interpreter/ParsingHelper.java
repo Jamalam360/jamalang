@@ -1,5 +1,6 @@
 package io.github.jamalam360.jamalang.interpreter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ParsingHelper {
@@ -53,6 +54,19 @@ public class ParsingHelper {
         }
 
         return arr;
+    }
+
+    public static String[] getEnclosedLines(String[] lines, int lineNumber) {
+        String nextLine = "";
+        ArrayList<String> enclosedLines = new ArrayList<>();
+
+        while (!nextLine.equals("}")) {
+            nextLine = lines[lineNumber];
+            enclosedLines.add(nextLine);
+            lineNumber++;
+        }
+
+        return enclosedLines.toArray(new String[0]);
     }
 
     /**

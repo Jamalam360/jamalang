@@ -4,4 +4,7 @@ var number3 = 70
 var number4 = 25
 
 var number5 = add(number1, number2, number3, number4)
-print(number5)
+
+for(5) => (x) {
+    print(x)
+}
