@@ -3,8 +3,6 @@ var number2 = 3
 var number3 = 70
 var number4 = 25
 
-var number5 = add(number1, number2, number3, number4)
+var number5 = number4 / 5 + number4
 
-for(10) => (x) {
-    print(x)
-}
+print(number5)

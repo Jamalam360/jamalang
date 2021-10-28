@@ -1,11 +1,12 @@
 package io.github.jamalam360.jamalang.interpreter;
 
 import io.github.jamalam360.jamalang.langauge.BuiltInFunctions;
+import org.mariuszgromada.math.mxparser.Argument;
+import org.mariuszgromada.math.mxparser.Expression;
 
 import java.util.HashMap;
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
-// We check if it is present before (using a different method other than isPresent)
 public class JamalangInterpreter {
     public final HashMap<String, Double> variables = new HashMap<>();
     private final BuiltInFunctions functions;
@@ -90,8 +91,20 @@ public class JamalangInterpreter {
             } else if (variables.containsKey(value)) {
                 return variables.get(value);
             } else {
-                return Double.parseDouble(value);
+                return new Expression(value, getArgumentsFromVariables()).calculate();
             }
         }
+    }
+
+    private Argument[] getArgumentsFromVariables() {
+        Argument[] arguments = new Argument[variables.size()];
+
+        int i = 0;
+        for (String name : variables.keySet()) {
+            arguments[i] = new Argument(name, variables.get(name));
+            i++;
+        }
+
+        return arguments;
     }
 }
