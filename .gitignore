@@ -19,3 +19,6 @@ bin/
 
 #Fabric
 run/
+
+#Junk test files
+test_files/
