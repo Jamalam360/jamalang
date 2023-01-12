@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "quilt_loader": {
+    "group": "io.github.jamalam360",
+    "id": "modifier",
+    "version": "${version}",
+    "metadata": {
+      "name": "Modifier",
+      "description": "Minecraft adapter for the Modifier modding DSL",
+      "contributors": {
+        "Jamalam": "Owner"
+      },
+      "contact": {
+        "sources": "https://github.com/JamCoreModding/modifier",
+        "issues": "https://github.com/JamCoreModding/modifier/issues"
+      },
+      "license": "MIT",
+      "icon": "assets/modifier/icon.png"
+    },
+    "intermediate_mappings": "net.fabricmc:intermediary",
+    "entrypoints": {
+      "init": "io.github.jamalam360.modifier.ModifierInit"
+    },
+    "depends": [
+      {
+        "id": "quilt_loader",
+        "versions": ">=0.18.0-"
+      },
+      {
+        "id": "quilted_fabric_api",
+        "versions": ">=4.0.0-"
+      },
+      {
+        "id": "minecraft",
+        "versions": ">=1.19.3"
+      }
+    ]
+  },
+  "mixin": "modifier.mixins.json"
+}
