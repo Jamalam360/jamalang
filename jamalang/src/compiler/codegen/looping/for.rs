@@ -35,7 +35,7 @@ impl<'a, 'ctx> Codegen<'a, 'ctx> for ForLoop {
 
         let index_ptr = builder.build_alloca(
             context.i32_type(),
-            &format!("modifier_internal$array_index_{}", self.identifier),
+            &format!("jamalang_internal$array_index_{}", self.identifier),
         );
         builder.build_store(index_ptr, context.i32_type().const_int(0u64, false));
 

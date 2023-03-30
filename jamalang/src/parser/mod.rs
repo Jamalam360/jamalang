@@ -6,10 +6,10 @@ pub mod expr;
 
 #[derive(pest_derive::Parser)]
 #[grammar = "./parser/grammar.pest"]
-pub(crate) struct ModifierParser;
+pub(crate) struct JamalangParser;
 
 #[derive(Debug, Clone)]
-pub struct ModifierFile {
+pub struct JamalangFile {
     pub source_file: String,
     pub statements: Vec<Statement>,
 }
@@ -17,8 +17,8 @@ pub struct ModifierFile {
 pub fn parse_ast<'a>(
     source_file: &str,
     input: &'a str,
-) -> Result<ModifierFile, pest::error::Error<Rule>> {
-    let pairs = ModifierParser::parse(Rule::File, input)?;
+) -> Result<JamalangFile, pest::error::Error<Rule>> {
+    let pairs = JamalangParser::parse(Rule::File, input)?;
     let mut statements = Vec::new();
 
     for pair in pairs
@@ -36,7 +36,7 @@ pub fn parse_ast<'a>(
         }
     }
 
-    Ok(ModifierFile {
+    Ok(JamalangFile {
         source_file: source_file.to_string(),
         statements,
     })

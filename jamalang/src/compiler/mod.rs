@@ -1,7 +1,7 @@
 use std::{collections::HashMap, ffi::c_char};
 
 use crate::compiler::codegen::Codegen;
-use crate::parser::ModifierFile;
+use crate::parser::JamalangFile;
 use builtins::{builtins, Builtin};
 use inkwell::{
     builder::Builder,
@@ -42,7 +42,7 @@ impl<'a, 'ctx> Compiler<'a, 'ctx> {
         }
     }
 
-    pub fn compile(&mut self, file: ModifierFile) -> CompileResult {
+    pub fn compile(&mut self, file: JamalangFile) -> CompileResult {
         for builtin in &self.builtins {
             unsafe { LLVMAddSymbol(builtin.name.as_ptr() as *const c_char, builtin.function) }
             self.module

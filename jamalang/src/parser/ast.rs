@@ -4,7 +4,7 @@ use enum_variant_type::EnumVariantType;
 
 use crate::parser::{
     expr::{parse_expression, Expr as CExpr},
-    parse_ast, ModifierFile, Rule,
+    parse_ast, JamalangFile, Rule,
 };
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -23,7 +23,7 @@ pub enum Type {
     Number,
     Char,
     Bool,
-    Array{ len: u32, kind: Box<Type> },
+    Array { len: u32, kind: Box<Type> },
     Custom(String),
 }
 
@@ -66,7 +66,7 @@ pub enum Statement {
         else_body: Vec<Statement>,
     },
     #[evt(derive(Clone, Debug))]
-    ForeignModule(ModifierFile),
+    ForeignModule(JamalangFile),
     #[evt(derive(Clone, Debug))]
     Expr { expr: CExpr },
     #[evt(derive(Clone, Debug))]

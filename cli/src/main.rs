@@ -13,13 +13,13 @@ pub struct Args {
 
 #[derive(Subcommand)]
 enum Commands {
-    /// View the AST of a modifier file.
+    /// View the AST of a Jamalang file.
     Ast {
         file: String,
         #[arg(default_value = "false", long, short)]
         time_parsing: bool,
     },
-    /// Runs a Modifier file, in JIT mode.
+    /// Runs a Jamalang file, in JIT mode.
     Run {
         /// The file to run.
         file: String,
@@ -27,7 +27,7 @@ enum Commands {
         #[arg(default_value = "false", long, short)]
         time_execution: bool,
     },
-    /// Compiles a Modifier file to a binary, or to IR.
+    /// Compiles a Jamalang file to a binary, or to IR.
     Compile {
         /// The file to compile.
         file: String,
