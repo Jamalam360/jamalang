@@ -1,0 +1,60 @@
+site_name: Jamalang
+site_description: Meet Jamalang, my toy langauge.
+site_url: https://lang.jamalam.tech/
+site_author: Jamalam
+
+repo_url: https://github.com/Jamalam360/jamalang
+repo_name: Jamalam360/jamalang
+
+docs_dir: content
+
+nav:
+  - Home: index.md
+  - Specification:
+      - Introduction: specification/introduction.md
+      - Requirements: specification/requirements.md
+      - Tests: specification/tests.md
+
+theme:
+  name: material
+  logo: assets/jamalam.jpeg
+  favicon: assets/jamalam.jpeg
+  language: en
+
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.indexes
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.share
+    - content.code.annotate
+    
+  palette:
+    scheme: slate
+    primary: red
+    accent: amber
+
+plugins:
+  - search
+  - social
+  - git-revision-date-localized:
+      type: timeago
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
+extra:
+  homepage: https://github.com/Jamalam360/jamalang
+
+  social:
+    - icon: fontawesome/brands/discord
+      link: https://discord.jamalam.tech
+    - icon: fontawesome/brands/github
+      link: https://github.com/Jamalam360/jamalang

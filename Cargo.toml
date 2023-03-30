@@ -1,0 +1,24 @@
+[workspace]
+resolver = "2"
+members = [
+    "cli",
+    "jamalang"
+]
+
+# The StdLib should not be a part of the workspace.
+# This is because we need to compile it while there is a lock on the root `target` dir (in a buildscript)
+exclude = [
+    "stdlib"
+]
+
+[workspace.package]
+edition = "2021"
+version = "0.1.0"
+authors = ["Jamalam <james@jamalam.tech>"]
+
+# Dependencies which are shared across the workspace
+[workspace.dependencies]
+inkwell = { version = "0.1", features = ["llvm15-0"]}
+
+[profile.release]
+opt-level = 3

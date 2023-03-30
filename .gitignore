@@ -1,24 +1,9 @@
-#Gradle
-.gradle/
-build/
-out/
-classes/
-
-#IntelliJ IDEA
-.idea/
-*.iml
-*.ipr
-*.iws
-
-#VSCode
-.settings/
 .vscode/
-bin/
-.classpath
-.project
-
-#Fabric
-run/
 
 #Junk test files
 test_files/
+.test_stdout.txt
+
+#Cargo
+target/
+*.bc

@@ -1,0 +1,84 @@
+// Expressions
+IdentifierDefinition = @{ ASCII_ALPHA ~ (ASCII_ALPHANUMERIC | "_")* }
+Identifier = @{ IdentifierDefinition ~ ( "." ~ IdentifierDefinition )* }
+
+Expr = { Object | Array | (Atom ~ (Infix ~ Atom)*) }
+  Object = { "{" ~ (IdentifierDefinition ~ ":" ~ Expr ~ ("," ~ IdentifierDefinition ~ ":" ~ Expr ~ ","?)*)? ~ "}" }
+  Array = { "[" ~ (Expr ~ ("," ~ Expr)*)? ~ "]" }
+  Infix =  _{ Add | Sub | Pow | Mul | Div | Mod | Range | Lte | Gte | Lt | Gt | NotEq | Eq }
+    Add = { "+" }
+    Sub = { "-" }
+    Mul = { "*" }
+    Div = { "/" }
+    Mod = { "%" }
+    Pow = { "**" }
+    Range = { ".." }
+    Lt = { "<" }
+    Gt = { ">" }
+    Lte = { "<=" }
+    Gte = { ">=" }
+    NotEq = { "is not" }
+    Eq = { "is" }
+  Atom = _{ UnaryMinus? ~ Primary ~ ArrayIndexing? }
+    Primary = _{ Value | "(" ~ Expr ~ ")" }
+    UnaryMinus = { "-" }
+    ArrayIndexing = { "[" ~ Expr ~ "]" }
+    Value = _{ FunctionCall | Bool | Identifier | Float | Char | String | None }
+      FunctionCall = { Identifier ~ "(" ~  FunctionArgsList ~ ")" ~ Block? }
+        FunctionArgsList = { (Expr ~ ("," ~ Expr)*)? }
+      Float = @{ NumberInner ~ ("." ~ NumberInner)? }
+        NumberInner = _{ "0" | (ASCII_NONZERO_DIGIT ~ (ASCII_DIGIT | "_")*) }
+      Bool = { "true" | "false" }
+      Char = { "'" ~ (!NEWLINE ~ ANY) ~ "'" }
+      String = { "'" ~ 
+        (
+          // StringInterpolation |
+          !("'" | "\\") ~ ANY |
+          "\\" ~ ("'" | "\\" | "/" | "b" | "f" | "n" | "r" | "t")
+          )* ~ "'" 
+      }
+        // StringInterpolation = { !("\\{") ~ "{" ~ Expr ~ !("\\{") ~ "}" }
+      None = { "None" }
+
+
+// Statements
+Assignment = { Identifier ~ ArrayIndexing?  ~ (AssSet | AssAdd | AssSub | AssMul | AssDiv | AssPow) ~ Expr }
+  AssSet = { "=" }
+  AssAdd = { "+=" }
+  AssSub = { "-=" }
+  AssMul = { "*=" }
+  AssDiv = { "/=" }
+  AssPow = { "^=" }
+FunctionDefinition = { Lambda? ~ "function" ~ IdentifierDefinition ~ "(" ~  FunctionArgsDefinitionList ~ ")" ~ TypeHint? ~ Block }
+  Lambda = { "lambda" }
+  FunctionArgsDefinitionList = { (IdentifierDefinition ~ TypeHint? ~ ("," ~ IdentifierDefinition ~ TypeHint?)*)? }
+ReturnStatement = { "return" ~ Expr }
+WhileStatement = { "while" ~ Expr ~ Block }
+ForStatement = { "for" ~ Identifier ~ TypeHint? ~ "in" ~ Expr ~ Block }
+IfBlock = { IfStatement ~ ElifStatement* ~ ElseStatement? }
+  IfStatement = { "if" ~ Expr ~ Block }
+  ElifStatement = { "elif" ~ Expr ~ Block }
+  ElseStatement = { "else" ~ Block }
+ImportStatement = { "import" ~ Path }
+  Path = @{ (!NEWLINE ~ ANY)+ }
+
+Block = { "{" ~ (Statement | NEWLINE)* ~ "}" }
+TypeHint = { ":" ~ Identifier ~ ("[" ~ Float ~ "]")? }
+Comment = @{ "#" ~ (!(NEWLINE) ~ ANY)* }
+
+Statement = {
+  (
+    Assignment |
+    FunctionDefinition |
+    ReturnStatement |
+    WhileStatement |
+    ForStatement |
+    IfBlock |
+    ImportStatement |
+    Expr |
+    Comment
+  ) ~ NEWLINE?
+}
+
+File = { SOI ~ (Statement | NEWLINE)* ~ EOI }
+WHITESPACE = _{ " " | "\t" | NEWLINE }

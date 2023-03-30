@@ -1,0 +1,39 @@
+name: Build and Deploy MkDocs Site 
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'site/**'
+      - '.github/workflows/publish-mkdocs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@v3
+        
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - uses: actions/cache@v2
+        with:
+          key: ${{ github.ref }}
+          path: .cache
+
+      - run: pip install mkdocs-material \
+          pillow \
+          cairosvg \
+          mkdocs-git-revision-date-localized-plugin
+
+      - run: mkdocs gh-deploy --force
+        
